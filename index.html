@@ -43,21 +43,14 @@
     <!-- SLIDES -->
     <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>Justification</h2>
-  </hgroup>
-  <article data-timings="">
-    <p>I was looking at the internet the other day, and I said to myself, &quot;what we really need is another online quiz.&quot; And at the same time I was computing delay discounting values for a study of meth-using MSM, so I decided to implement a delay discounting quiz for another audience (who are hopefully not using meth, unless the coursera deadline was just too much for them). </p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="class" id="id" style="background:;">
-  <hgroup>
     <h2>Delay Discounting</h2>
   </hgroup>
   <article data-timings="">
-    <p>Delay discounting is a trait-like measure that describes how much people devalue a reward because they&#39;ll have to wait for it. For more information, see the &quot;background&quot; tab of the app. (don&#39;t have the link to the app yet? You&#39;ll just have to wait for it.)</p>
+    <p>Delay discounting is a trait-like measure that describes how much people devalue a reward because they&#39;ll have to wait for it. We would like to enable people to learn about their own delay discounting using an online quiz! (also helping to address the dramatic shortage of qiuzzes on the internet). </p>
+
+<p>For more information, see the &quot;background&quot; tab of the app. (don&#39;t have the link to the app yet? You&#39;ll just have to wait for it.)</p>
+
+<p>We compute delay discounting using the method of <a href="http://www.ncbi.nlm.nih.gov/pubmed/15190698">Wileyto, Audrain-McGovern, Epstein, &amp; Lerman (2004)</a>. It performs logistic regression, predicting the choice of the immediate reward (coded 0) or the delayed reward (coded 1) based on the length of the delay and the ratio of the delayed to the immediate reward. <em>k</em>, the discounting parameter, is the ratio of the two regression parameters. </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -65,7 +58,7 @@
 
 <slide class="class" id="id" style="background:;">
   <hgroup>
-    <h2>The computation</h2>
+    <h2>Generating Delay Discounting Questions</h2>
   </hgroup>
   <article data-timings="">
     <p>Participants are shown 10 questions asking them to choose between an immediate reward and a larger, delayed reward. Reward type, delay, and amount of discounting are randomly generated (with a reasonable range applied for each delay period). </p>
@@ -97,9 +90,9 @@ yyy&lt;-1
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-4" style="background:;">
+<slide class="" id="slide-3" style="background:;">
   <hgroup>
-    <h2>Generation</h2>
+    <h2>Randomly Generating Questions</h2>
   </hgroup>
   <article data-timings="">
     <p>Below we run an iteration of the code and show the types of questions participants might receive:</p>
@@ -122,12 +115,14 @@ yyy&lt;-1
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-5" style="background:;">
+<slide class="" id="slide-4" style="background:;">
   <hgroup>
     <h2>Questions</h2>
   </hgroup>
   <article data-timings="">
-    <p>Here are the questions a user might see based on the code above:</p>
+    <p>Below is an example of the questions a user might see, based on the code above. </p>
+
+<p>Don&#39;t forget to check out the app at <a href="http://octern.shinyapps.io/shiny">http://octern.shinyapps.io/shiny</a>!</p>
 
 <pre><code class="r">qtext&lt;-apply(qs, 1, function(x) { paste0(x[&#39;n&#39;], &quot;. Would you rather have 1 &quot;, x[&#39;token&#39;], &quot; now or &quot;, x[&#39;vd&#39;], &#39; of them in &#39;, x[&#39;dname&#39;], &quot;?\r\n&quot;) })
 cat(qtext)
@@ -151,78 +146,32 @@ cat(qtext)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-6" style="background:;">
-  <hgroup>
-    <h2>Computations</h2>
-  </hgroup>
-  <article data-timings="">
-    <p>We compute delay discounting using the method of <a href="http://www.ncbi.nlm.nih.gov/pubmed/15190698">Wileyto, Audrain-McGovern, Epstein, &amp; Lerman (2004)</a>. It performs logistic regression, predicting the choice of the immediate reward (coded 0) or the delayed reward (coded 1) based on the length of the delay and the ratio of the delayed to the immediate reward. <em>k</em>, the discounting parameter, is the ratio of the two regression parameters. </p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="class" id="id" style="background:;">
-  <hgroup>
-    <h2>Features to implement in the future</h2>
-  </hgroup>
-  <article data-timings="">
-    <p>The current version of the application uses 10 questions, with randomly-generated delay periods and degrees of discounting and a randomly selected type of reward. We would like to implement:</p>
-
-<ul>
-<li>An option to run the test with money instead of other material rewards (a simple matter of doing some reformatting and adding a UI option)</li>
-<li>A plot of the user&#39;s discounting across different time periods (usually modeled with a hyperbolic function)</li>
-<li>A comparison of degree of discounting across different types of reward</li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
     <slide class="backdrop"></slide>
   </slides>
   <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
     <ul>
       <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=1 title='Justification'>
+        data-slide=1 title='Delay Discounting'>
          1
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=2 title='Delay Discounting'>
+        data-slide=2 title='Generating Delay Discounting Questions'>
          2
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=3 title='The computation'>
+        data-slide=3 title='Randomly Generating Questions'>
          3
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=4 title='Generation'>
+        data-slide=4 title='Questions'>
          4
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=5 title='Questions'>
-         5
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=6 title='Computations'>
-         6
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=7 title='Features to implement in the future'>
-         7
       </a>
     </li>
   </ul>
