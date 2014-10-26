@@ -26,6 +26,70 @@ Delay discounting is a trait-like measure that describes how much people devalue
 
 ## The computation
 
+Participants are shown 10 questions asking them to choose between an immediate reward and a larger, delayed reward. Reward type, delay, and amount of discounting are randomly generated (with a reasonable range applied for each delay period). 
+
+Below are the parameters for generating the questions: 
+
+```{r parameters}
+items<-c("taco", "kitten", "kiss", "flan", "sardine", "penny", "diamond", "hat", "marshmallow")
+itemss<-c("tacos", "kittens", "kisses", "flans", "sardines", "pennies", "diamonds", "hats", "marshmallows")
+times<-list(
+  list(1, "1 day", c(1.1, 1.2, 1.4, 1.7, 2, 4, 6, 10)), 
+  list(2, "2 days", c(1.1, 1.2, 1.4, 1.7, 2, 4, 6, 10)), 
+  list(7, "1 week", c(1.1, 1.2, 1.4, 1.7, 2, 4, 6, 10)),  
+  list(14, "2 weeks", 2:20), 
+  list(60, "2 months", 2:20), 
+  list(365, "1 year", 2:100), 
+  list(730, "2 years", seq(10,1000,10)), 
+  list(1825, "5 years", seq(10,1000,10))
+)
+
+dollarsign<-"$"
+qs<-data.frame(n=numeric(), token=character(), vd=numeric(), vi=numeric(), d=numeric(), dname=character(), r=numeric(), rparam=numeric(), waited=numeric())
+tokn<-sample(1:length(items),1)
+toks<-itemss[tokn]
+tok<-items[tokn]
+yyy<-1
+```
+
+---
+
+## Generation
+
+Below we run an iteration of the code and show the types of questions participants might receive:
+```{r generate}
+for(n in 1:10) {
+  temp<-data.frame(n=0, token=tok, vd=0, vi=0, d=0, dname="x", r=0, rparam=0, waited=-1)
+  temp['n']<-n
+  timei<-sample(times, 1)
+  temp["d"]<-as.numeric(timei[[1]][[1]])
+  temp['dname']<-timei[[1]][[2]]
+  temp["vd"]<-sample(timei[[1]][[3]],1)
+  temp["vi"]<-1
+  temp["r"]<-temp["vi"]/temp["vd"]
+  temp["rparam"]<-(1-(temp["vd"]/temp["vi"]))
+  qs<-rbind(qs,temp)
+}
+
+```
+
+---
+
+## Questions
+
+Here are the questions a user might see based on the code above:
+
+```{r questions}
+qtext<-apply(qs, 1, function(x) { paste0(x['n'], ". Would you rather have 1 ", x['token'], " now or ", x['vd'], ' of them in ', x['dname'], "?\r\n") })
+cat(qtext)
+```
+
+(The questions are randomized each time the page is reloaded)
+
+---
+
+## Computations
+
 We compute delay discounting using the method of [Wileyto, Audrain-McGovern, Epstein, & Lerman (2004)](http://www.ncbi.nlm.nih.gov/pubmed/15190698). It performs logistic regression, predicting the choice of the immediate reward (coded 0) or the delayed reward (coded 1) based on the length of the delay and the ratio of the delayed to the immediate reward. *k*, the discounting parameter, is the ratio of the two regression parameters. 
 
 
@@ -33,8 +97,11 @@ We compute delay discounting using the method of [Wileyto, Audrain-McGovern, Eps
 
 ## Features to implement in the future
 
-The current version of the application uses 10 questions, with randomly-generated delay periods and degrees of discounting and a randomly selected type of reward. We would like to implement an option to run the test with money instead of other material rewards (a simple matter of doing some reformatting and adding a UI option). It might also be interesting to provide a plot of the user's discounting across different time periods (usually modeled with a hyperbolic function).
+The current version of the application uses 10 questions, with randomly-generated delay periods and degrees of discounting and a randomly selected type of reward. We would like to implement:
 
+* An option to run the test with money instead of other material rewards (a simple matter of doing some reformatting and adding a UI option)
+* A plot of the user's discounting across different time periods (usually modeled with a hyperbolic function)
+* A comparison of degree of discounting across different types of reward
 
 
 

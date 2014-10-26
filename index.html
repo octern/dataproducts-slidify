@@ -68,6 +68,94 @@
     <h2>The computation</h2>
   </hgroup>
   <article data-timings="">
+    <p>Participants are shown 10 questions asking them to choose between an immediate reward and a larger, delayed reward. Reward type, delay, and amount of discounting are randomly generated (with a reasonable range applied for each delay period). </p>
+
+<p>Below are the parameters for generating the questions: </p>
+
+<pre><code class="r">items&lt;-c(&quot;taco&quot;, &quot;kitten&quot;, &quot;kiss&quot;, &quot;flan&quot;, &quot;sardine&quot;, &quot;penny&quot;, &quot;diamond&quot;, &quot;hat&quot;, &quot;marshmallow&quot;)
+itemss&lt;-c(&quot;tacos&quot;, &quot;kittens&quot;, &quot;kisses&quot;, &quot;flans&quot;, &quot;sardines&quot;, &quot;pennies&quot;, &quot;diamonds&quot;, &quot;hats&quot;, &quot;marshmallows&quot;)
+times&lt;-list(
+  list(1, &quot;1 day&quot;, c(1.1, 1.2, 1.4, 1.7, 2, 4, 6, 10)), 
+  list(2, &quot;2 days&quot;, c(1.1, 1.2, 1.4, 1.7, 2, 4, 6, 10)), 
+  list(7, &quot;1 week&quot;, c(1.1, 1.2, 1.4, 1.7, 2, 4, 6, 10)),  
+  list(14, &quot;2 weeks&quot;, 2:20), 
+  list(60, &quot;2 months&quot;, 2:20), 
+  list(365, &quot;1 year&quot;, 2:100), 
+  list(730, &quot;2 years&quot;, seq(10,1000,10)), 
+  list(1825, &quot;5 years&quot;, seq(10,1000,10))
+)
+
+dollarsign&lt;-&quot;$&quot;
+qs&lt;-data.frame(n=numeric(), token=character(), vd=numeric(), vi=numeric(), d=numeric(), dname=character(), r=numeric(), rparam=numeric(), waited=numeric())
+tokn&lt;-sample(1:length(items),1)
+toks&lt;-itemss[tokn]
+tok&lt;-items[tokn]
+yyy&lt;-1
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Generation</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Below we run an iteration of the code and show the types of questions participants might receive:</p>
+
+<pre><code class="r">for(n in 1:10) {
+  temp&lt;-data.frame(n=0, token=tok, vd=0, vi=0, d=0, dname=&quot;x&quot;, r=0, rparam=0, waited=-1)
+  temp[&#39;n&#39;]&lt;-n
+  timei&lt;-sample(times, 1)
+  temp[&quot;d&quot;]&lt;-as.numeric(timei[[1]][[1]])
+  temp[&#39;dname&#39;]&lt;-timei[[1]][[2]]
+  temp[&quot;vd&quot;]&lt;-sample(timei[[1]][[3]],1)
+  temp[&quot;vi&quot;]&lt;-1
+  temp[&quot;r&quot;]&lt;-temp[&quot;vi&quot;]/temp[&quot;vd&quot;]
+  temp[&quot;rparam&quot;]&lt;-(1-(temp[&quot;vd&quot;]/temp[&quot;vi&quot;]))
+  qs&lt;-rbind(qs,temp)
+}
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Questions</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Here are the questions a user might see based on the code above:</p>
+
+<pre><code class="r">qtext&lt;-apply(qs, 1, function(x) { paste0(x[&#39;n&#39;], &quot;. Would you rather have 1 &quot;, x[&#39;token&#39;], &quot; now or &quot;, x[&#39;vd&#39;], &#39; of them in &#39;, x[&#39;dname&#39;], &quot;?\r\n&quot;) })
+cat(qtext)
+</code></pre>
+
+<pre><code>##  1. Would you rather have 1 sardine now or   1.1 of them in 1 week?
+##   2. Would you rather have 1 sardine now or  81.0 of them in 1 year?
+##   3. Would you rather have 1 sardine now or   1.4 of them in 1 day?
+##   4. Would you rather have 1 sardine now or   8.0 of them in 2 months?
+##   5. Would you rather have 1 sardine now or   1.2 of them in 1 week?
+##   6. Would you rather have 1 sardine now or 420.0 of them in 5 years?
+##   7. Would you rather have 1 sardine now or  81.0 of them in 1 year?
+##   8. Would you rather have 1 sardine now or   1.7 of them in 1 day?
+##   9. Would you rather have 1 sardine now or   3.0 of them in 2 weeks?
+##  10. Would you rather have 1 sardine now or 690.0 of them in 5 years?
+</code></pre>
+
+<p>(The questions are randomized each time the page is reloaded)</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Computations</h2>
+  </hgroup>
+  <article data-timings="">
     <p>We compute delay discounting using the method of <a href="http://www.ncbi.nlm.nih.gov/pubmed/15190698">Wileyto, Audrain-McGovern, Epstein, &amp; Lerman (2004)</a>. It performs logistic regression, predicting the choice of the immediate reward (coded 0) or the delayed reward (coded 1) based on the length of the delay and the ratio of the delayed to the immediate reward. <em>k</em>, the discounting parameter, is the ratio of the two regression parameters. </p>
 
   </article>
@@ -79,7 +167,13 @@
     <h2>Features to implement in the future</h2>
   </hgroup>
   <article data-timings="">
-    <p>The current version of the application uses 10 questions, with randomly-generated delay periods and degrees of discounting and a randomly selected type of reward. We would like to implement an option to run the test with money instead of other material rewards (a simple matter of doing some reformatting and adding a UI option). It might also be interesting to provide a plot of the user&#39;s discounting across different time periods (usually modeled with a hyperbolic function).</p>
+    <p>The current version of the application uses 10 questions, with randomly-generated delay periods and degrees of discounting and a randomly selected type of reward. We would like to implement:</p>
+
+<ul>
+<li>An option to run the test with money instead of other material rewards (a simple matter of doing some reformatting and adding a UI option)</li>
+<li>A plot of the user&#39;s discounting across different time periods (usually modeled with a hyperbolic function)</li>
+<li>A comparison of degree of discounting across different types of reward</li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -109,8 +203,26 @@
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=4 title='Features to implement in the future'>
+        data-slide=4 title='Generation'>
          4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Questions'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Computations'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Features to implement in the future'>
+         7
       </a>
     </li>
   </ul>
