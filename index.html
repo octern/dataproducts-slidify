@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Delay Discounting quiz app</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Delay Discounting quiz app">
+  <meta name="author" content="Michael Cohn">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Delay Discounting quiz app</h1>
+    <h2>Wait for it...</h2>
+    <p>Michael Cohn<br/>Courserer</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Justification</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>I was looking at the internet the other day, and I said to myself, &quot;what we really need is another online quiz.&quot; And at the same time I was computing delay discounting values for a study of meth-using MSM, so I decided to implement a delay discounting quiz for another audience (who are hopefully not using meth, unless the coursera deadline was just too much for them). </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Delay Discounting</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Delay discounting is a trait-like measure that describes how much people devalue a reward because they&#39;ll have to wait for it. For more information, see the &quot;background&quot; tab of the app. (don&#39;t have the link to the app yet? You&#39;ll just have to wait for it.)</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>The computation</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>We compute delay discounting using the method of <a href="http://www.ncbi.nlm.nih.gov/pubmed/15190698">Wileyto, Audrain-McGovern, Epstein, &amp; Lerman (2004)</a>. It performs logistic regression, predicting the choice of the immediate reward (coded 0) or the delayed reward (coded 1) based on the length of the delay and the ratio of the delayed to the immediate reward. <em>k</em>, the discounting parameter, is the ratio of the two regression parameters. </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Features to implement in the future</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The current version of the application uses 10 questions, with randomly-generated delay periods and degrees of discounting and a randomly selected type of reward. We would like to implement an option to run the test with money instead of other material rewards (a simple matter of doing some reformatting and adding a UI option). It might also be interesting to provide a plot of the user&#39;s discounting across different time periods (usually modeled with a hyperbolic function).</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Justification'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Delay Discounting'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='The computation'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Features to implement in the future'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
