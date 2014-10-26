@@ -80,11 +80,6 @@ Below is an example of the questions a user might see, based on the code above.
 Don't forget to check out the app at http://octern.shinyapps.io/shiny!
 
 
-```r
-qtext<-apply(qs, 1, function(x) { paste0(x['n'], ". Would you rather have 1 ", x['token'], " now or ", x['vd'], ' of them in ', x['dname'], "?\r\n") })
-cat(qtext)
-```
-
 ```
 ##  1. Would you rather have 1 sardine now or   1.1 of them in 1 week?
 ##   2. Would you rather have 1 sardine now or  81.0 of them in 1 year?
